@@ -1,0 +1,28 @@
+[
+  {
+    "station": "east",
+    "day": "2030-04-09",
+    "submission_id": "E-initial",
+    "rows": [
+      {"litres": 5, "origin": {"register": "东站日簿", "line": 1}},
+      {"litres": null, "origin": {"register": "东站日簿", "line": 2}},
+      {"litres": 0, "origin": {"register": "东站日簿", "line": 3}}
+    ]
+  },
+  {
+    "station": "east",
+    "day": "2030-04-09",
+    "submission_id": "E-correction",
+    "rows": [
+      {"litres": 7, "origin": {"register": "东站更正簿", "line": 1}},
+      {"litres": null, "origin": {"register": "东站日簿", "line": 2}},
+      {"litres": 0, "origin": {"register": "东站日簿", "line": 3}}
+    ]
+  },
+  {
+    "station": "east",
+    "day": "2030-04-09",
+    "submission_id": "E-next",
+    "rows": [{"litres": 13, "origin": {"register": "东站更正簿", "line": 2}}]
+  }
+]

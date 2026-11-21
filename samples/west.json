@@ -1,0 +1,14 @@
+[
+  {
+    "station": "west",
+    "day": "2030-04-09",
+    "submission_id": "W-initial",
+    "rows": [{"litres": 11, "origin": {"register": "西站日簿", "line": 1}}]
+  },
+  {
+    "station": "west",
+    "day": "2030-04-09",
+    "submission_id": "W-next",
+    "rows": [{"litres": 17, "origin": {"register": "西站更正簿", "line": 1}}]
+  }
+]
