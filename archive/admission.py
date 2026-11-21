@@ -4,6 +4,7 @@ from accounting.reconcile import reconcile_handoff
 from archive.publication import publish_report
 from archive.trust import resolve_issuer
 from exchange.package import decode_package
+from exchange.station_piece import piece_digest
 from exchange.witness import pickup_seal
 from ledger_support import InvalidData, load_json, require_fields
 
@@ -18,13 +19,26 @@ def _check_placement(package, issuer):
 
 
 def _check_pickup_seal(package, issuer):
+    """Verify the joint-activation evidence against the two received pieces.
+
+    The seal is recomputed over the canonical digests of the exact pieces in
+    hand, so missing evidence, a forged seal, a piece swapped between pickups,
+    or a same-body replacement revision all fail verification before any
+    ledger row or receipt is written.
+    """
     if package.evidence is None:
-        return
+        raise InvalidData("Pickup evidence is required for joint admission")
     fields = require_fields(load_json(package.evidence), ("seal",), "pickup evidence")
     seal = fields["seal"]
-    expected = pickup_seal(issuer, package.pickup_id, package.day)
+    expected = pickup_seal(
+        issuer,
+        package.pickup_id,
+        package.day,
+        piece_digest(package.east),
+        piece_digest(package.west),
+    )
     if type(seal) is not str or not seal.isascii() or not hmac.compare_digest(seal, expected):
-        raise InvalidData("Pickup seal does not match the configured issuer")
+        raise InvalidData("Pickup seal does not match the configured issuer and received pieces")
 
 
 def admit(archive, raw, trusted_issuers):
